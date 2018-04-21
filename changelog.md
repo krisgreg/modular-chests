@@ -1,6 +1,8 @@
 # Modular-Chests
 
 # Changelog
+* 0.16.5 -
+* Added support for Chest sizes: 34, 41, 48 and 55 (by Gaddhi)
 * 0.16.4 -
 * Modular Chest inventory size increased up to 32 slots (same as the regular iron chest)
 * Modular Chests now contain their inventory when merged to larger chests
