@@ -2,3 +2,8 @@ w: 1x6 chest  = 193				h: 48x195
 w: 1x13 chest = 418 + 23 + 2 = 32x443		h: 48x443
 w: 1x20 chest = 643 + 23 + 2 = 32x668		h: 48x668
 w: 1x27 chest = 868.5 + 23 + 2 = 32x893		h: 48x893
+w: 1x34 chest: 32x1118 h: 48x1118
+w: 1x41 chest: 32x1343 h: 48x1343
+w: 1x48 chest: 32x1568 h: 48x1568
+w: 1x55 chest: 32x1793 h: 48x1793
+(difference: 225 pixel)
