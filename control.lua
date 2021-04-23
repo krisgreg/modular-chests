@@ -64,6 +64,7 @@ script.on_event(defines.events.on_built_entity, function(event)
     local NewChestY = event.created_entity.position.y
 
     local CurrentSurface = game.players[event.player_index].surface
+    local CurrentUserForce = event.created_entity.last_user.force
 
     function DestroyChest(Direction, OffsetPos)
     	local SearchX = 0
@@ -124,14 +125,14 @@ script.on_event(defines.events.on_built_entity, function(event)
     		NewEntity = CurrentSurface.create_entity(
 			{
     	    	name=ChestName,
-    	    	force="player",
+    	    	force=CurrentUserForce,
     	    	position={NewChestX - LowPos - (0.5 * ChestSize - 0.5), NewChestY}
     		})
     	elseif Direction == "vertical" then
     		NewEntity = CurrentSurface.create_entity(
 			{
     	    	name=ChestName,
-    	    	force="player",
+    	    	force=CurrentUserForce,
     	    	position={NewChestX, NewChestY - LowPos - (0.5 * ChestSize - 0.5)}
     		})
     	end
