@@ -1,365 +1,70 @@
-data:extend(
-{
-	{
-		type = "item",
-		name = "modular-chest",
-		icons = {
-			{
-      		icon = "__LB-Modular-Chests__/graphics/icons/iron-chest.png",
-      		tint = {r=1,g=1,b=1,a=1}
-			}
-   		},
-   		icon_size = 32,
-   		flags = {"goes-to-quickbar"},
-   		subgroup = "storage",
-   		order = "a-6",
-   		place_result = "modular-chest",
-   		stack_size = 200,
-	},
-}
-)
+function CreateChestItem(ChestName, IconName, Order, PlaceResult)
+   data:extend(
+   {
+      {
+         type = "item",
+         name = ChestName,
+         icons = {
+            {
+               icon = "__LB-Modular-Chests__/graphics/icons/"..IconName,
+               tint = {r=1,g=1,b=1,a=1}
+            }
+            },
+            icon_size = 32,
+            flags = {},
+            subgroup = "storage",
+            order = Order,
+            place_result = PlaceResult,
+            stack_size = 200,
+      },
+   }
+   )
+end
 
 -------------------------------------------------------------------------
---Horizontal Chests--
+--Modular Iron Chests--
 -------------------------------------------------------------------------
 
-data:extend(
-{
-   {
-      type = "item",
-      name = "long-iron-chest",
-      icons = {
-         {
-            icon = "__LB-Modular-Chests__/graphics/icons/iron-chest.png",
-            tint = {r=1,g=1,b=1,a=1}
-         }
-         },
-         icon_size = 32,
-         flags = {"goes-to-quickbar"},
-         subgroup = "storage",
-         order = "b-1",
-         place_result = "long-iron-chest",
-         stack_size = 200,
-   },
-}
-)
+CreateChestItem("modular-chest", "iron-chest.png", "a-6", "modular-chest")
 
-data:extend(
-{
-   {
-      type = "item",
-      name = "long-iron-chest-1x13",
-      icons = {
-         {
-            icon = "__LB-Modular-Chests__/graphics/icons/iron-chest.png",
-            tint = {r=1,g=1,b=1,a=1}
-         }
-         },
-         icon_size = 32,
-         flags = {"goes-to-quickbar"},
-         subgroup = "storage",
-         order = "b-2",
-         place_result = "long-iron-chest-1x13",
-         stack_size = 200,
-   },
-}
-)
+CreateChestItem("long-iron-chest", "iron-chest.png", "b-1", "long-iron-chest")
+CreateChestItem("long-iron-chest-1x13", "iron-chest.png", "b-2", "long-iron-chest-1x13")
+CreateChestItem("long-iron-chest-1x20", "iron-chest.png", "b-3", "long-iron-chest-1x20")
+CreateChestItem("long-iron-chest-1x27", "iron-chest.png", "b-4", "long-iron-chest-1x27")
+CreateChestItem("long-iron-chest-1x34", "iron-chest.png", "b-5", "long-iron-chest-1x34")
+CreateChestItem("long-iron-chest-1x41", "iron-chest.png", "b-6", "long-iron-chest-1x41")
+CreateChestItem("long-iron-chest-1x48", "iron-chest.png", "b-7", "long-iron-chest-1x48")
+CreateChestItem("long-iron-chest-1x55", "iron-chest.png", "b-8", "long-iron-chest-1x55")
 
-data:extend(
-{
-   {
-      type = "item",
-      name = "long-iron-chest-1x20",
-      icons = {
-         {
-            icon = "__LB-Modular-Chests__/graphics/icons/iron-chest.png",
-            tint = {r=1,g=1,b=1,a=1}
-         }
-         },
-         icon_size = 32,
-         flags = {"goes-to-quickbar"},
-         subgroup = "storage",
-         order = "b-3",
-         place_result = "long-iron-chest-1x20",
-         stack_size = 200,
-   },
-}
-)
-
-data:extend(
-{
-   {
-      type = "item",
-      name = "long-iron-chest-1x27",
-      icons = {
-         {
-            icon = "__LB-Modular-Chests__/graphics/icons/iron-chest.png",
-            tint = {r=1,g=1,b=1,a=1}
-         }
-         },
-         icon_size = 32,
-         flags = {"goes-to-quickbar"},
-         subgroup = "storage",
-         order = "b-4",
-         place_result = "long-iron-chest-1x27",
-         stack_size = 200,
-   },
-}
-)
-
-data:extend(
-{
-   {
-      type = "item",
-      name = "long-iron-chest-1x34",
-      icons = {
-         {
-            icon = "__LB-Modular-Chests__/graphics/icons/iron-chest.png",
-            tint = {r=1,g=1,b=1,a=1}
-         }
-         },
-         icon_size = 32,
-         flags = {"goes-to-quickbar"},
-         subgroup = "storage",
-         order = "b-5",
-         place_result = "long-iron-chest-1x34",
-         stack_size = 200,
-   },
-}
-)
-
-data:extend(
-{
-   {
-      type = "item",
-      name = "long-iron-chest-1x41",
-      icons = {
-         {
-            icon = "__LB-Modular-Chests__/graphics/icons/iron-chest.png",
-            tint = {r=1,g=1,b=1,a=1}
-         }
-         },
-         icon_size = 32,
-         flags = {"goes-to-quickbar"},
-         subgroup = "storage",
-         order = "b-6",
-         place_result = "long-iron-chest-1x41",
-         stack_size = 200,
-   },
-}
-)
-
-data:extend(
-{
-   {
-      type = "item",
-      name = "long-iron-chest-1x48",
-      icons = {
-         {
-            icon = "__LB-Modular-Chests__/graphics/icons/iron-chest.png",
-            tint = {r=1,g=1,b=1,a=1}
-         }
-         },
-         icon_size = 32,
-         flags = {"goes-to-quickbar"},
-         subgroup = "storage",
-         order = "b-7",
-         place_result = "long-iron-chest-1x48",
-         stack_size = 200,
-   },
-}
-)
-
-data:extend(
-{
-   {
-      type = "item",
-      name = "long-iron-chest-1x55",
-      icons = {
-         {
-            icon = "__LB-Modular-Chests__/graphics/icons/iron-chest.png",
-            tint = {r=1,g=1,b=1,a=1}
-         }
-         },
-         icon_size = 32,
-         flags = {"goes-to-quickbar"},
-         subgroup = "storage",
-         order = "b-8",
-         place_result = "long-iron-chest-1x55",
-         stack_size = 200,
-   },
-}
-)
-
+CreateChestItem("long-iron-chest-v", "iron-chest.png", "b-1", "long-iron-chest-v")
+CreateChestItem("long-iron-chest-v-1x13", "iron-chest.png", "b-2", "long-iron-chest-v-1x13")
+CreateChestItem("long-iron-chest-v-1x20", "iron-chest.png", "b-3", "long-iron-chest-v-1x20")
+CreateChestItem("long-iron-chest-v-1x27", "iron-chest.png", "b-4", "long-iron-chest-v-1x27")
+CreateChestItem("long-iron-chest-v-1x34", "iron-chest.png", "b-5", "long-iron-chest-v-1x34")
+CreateChestItem("long-iron-chest-v-1x41", "iron-chest.png", "b-6", "long-iron-chest-v-1x41")
+CreateChestItem("long-iron-chest-v-1x48", "iron-chest.png", "b-7", "long-iron-chest-v-1x48")
+CreateChestItem("long-iron-chest-v-1x55", "iron-chest.png", "b-8", "long-iron-chest-v-1x55")
 
 -------------------------------------------------------------------------
---Vertical Chests--
+--Modular Steel Chests--
 -------------------------------------------------------------------------
 
-data:extend(
-{
-   {
-      type = "item",
-      name = "long-iron-chest-v",
-      icons = {
-         {
-            icon = "__LB-Modular-Chests__/graphics/icons/iron-chest.png",
-            tint = {r=1,g=1,b=1,a=1}
-         }
-         },
-         icon_size = 32,
-         flags = {"goes-to-quickbar"},
-         subgroup = "storage",
-         order = "c-1",
-         place_result = "long-iron-chest-v",
-         stack_size = 200,
-   },
-}
-)
+CreateChestItem("modular-steel-chest", "steel-chest.png", "a-7", "modular-steel-chest")
 
-data:extend(
-{
-   {
-      type = "item",
-      name = "long-iron-chest-v-1x13",
-      icons = {
-         {
-            icon = "__LB-Modular-Chests__/graphics/icons/iron-chest.png",
-            tint = {r=1,g=1,b=1,a=1}
-         }
-         },
-         icon_size = 32,
-         flags = {"goes-to-quickbar"},
-         subgroup = "storage",
-         order = "c-2",
-         place_result = "long-iron-chest-v-1x13",
-         stack_size = 200,
-   },
-}
-)
+CreateChestItem("long-steel-chest", "steel-chest.png", "c-1", "long-steel-chest")
+CreateChestItem("long-steel-chest-1x13", "steel-chest.png", "c-2", "long-steel-chest-1x13")
+CreateChestItem("long-steel-chest-1x20", "steel-chest.png", "c-3", "long-steel-chest-1x20")
+CreateChestItem("long-steel-chest-1x27", "steel-chest.png", "c-4", "long-steel-chest-1x27")
+CreateChestItem("long-steel-chest-1x34", "steel-chest.png", "c-5", "long-steel-chest-1x34")
+CreateChestItem("long-steel-chest-1x41", "steel-chest.png", "c-6", "long-steel-chest-1x41")
+CreateChestItem("long-steel-chest-1x48", "steel-chest.png", "c-7", "long-steel-chest-1x48")
+CreateChestItem("long-steel-chest-1x55", "steel-chest.png", "c-8", "long-steel-chest-1x55")
 
-data:extend(
-{
-   {
-      type = "item",
-      name = "long-iron-chest-v-1x20",
-      icons = {
-         {
-            icon = "__LB-Modular-Chests__/graphics/icons/iron-chest.png",
-            tint = {r=1,g=1,b=1,a=1}
-         }
-         },
-         icon_size = 32,
-         flags = {"goes-to-quickbar"},
-         subgroup = "storage",
-         order = "c-3",
-         place_result = "long-iron-chest-v-1x20",
-         stack_size = 200,
-   },
-}
-)
-
-data:extend(
-{
-   {
-      type = "item",
-      name = "long-iron-chest-v-1x27",
-      icons = {
-         {
-            icon = "__LB-Modular-Chests__/graphics/icons/iron-chest.png",
-            tint = {r=1,g=1,b=1,a=1}
-         }
-         },
-         icon_size = 32,
-         flags = {"goes-to-quickbar"},
-         subgroup = "storage",
-         order = "c-4",
-         place_result = "long-iron-chest-v-1x27",
-         stack_size = 200,
-   },
-}
-)
-
-data:extend(
-{
-   {
-      type = "item",
-      name = "long-iron-chest-v-1x34",
-      icons = {
-         {
-            icon = "__LB-Modular-Chests__/graphics/icons/iron-chest.png",
-            tint = {r=1,g=1,b=1,a=1}
-         }
-         },
-         icon_size = 32,
-         flags = {"goes-to-quickbar"},
-         subgroup = "storage",
-         order = "c-5",
-         place_result = "long-iron-chest-v-1x34",
-         stack_size = 200,
-   },
-}
-)
-
-data:extend(
-{
-   {
-      type = "item",
-      name = "long-iron-chest-v-1x41",
-      icons = {
-         {
-            icon = "__LB-Modular-Chests__/graphics/icons/iron-chest.png",
-            tint = {r=1,g=1,b=1,a=1}
-         }
-         },
-         icon_size = 32,
-         flags = {"goes-to-quickbar"},
-         subgroup = "storage",
-         order = "c-6",
-         place_result = "long-iron-chest-v-1x41",
-         stack_size = 200,
-   },
-}
-)
-
-data:extend(
-{
-   {
-      type = "item",
-      name = "long-iron-chest-v-1x48",
-      icons = {
-         {
-            icon = "__LB-Modular-Chests__/graphics/icons/iron-chest.png",
-            tint = {r=1,g=1,b=1,a=1}
-         }
-         },
-         icon_size = 32,
-         flags = {"goes-to-quickbar"},
-         subgroup = "storage",
-         order = "c-7",
-         place_result = "long-iron-chest-v-1x48",
-         stack_size = 200,
-   },
-}
-)
-
-data:extend(
-{
-   {
-      type = "item",
-      name = "long-iron-chest-v-1x55",
-      icons = {
-         {
-            icon = "__LB-Modular-Chests__/graphics/icons/iron-chest.png",
-            tint = {r=1,g=1,b=1,a=1}
-         }
-         },
-         icon_size = 32,
-         flags = {"goes-to-quickbar"},
-         subgroup = "storage",
-         order = "c-8",
-         place_result = "long-iron-chest-v-1x55",
-         stack_size = 200,
-   },
-}
-)
+CreateChestItem("long-steel-chest-v", "steel-chest.png", "c-1", "long-steel-chest-v")
+CreateChestItem("long-steel-chest-v-1x13", "steel-chest.png", "c-2", "long-steel-chest-v-1x13")
+CreateChestItem("long-steel-chest-v-1x20", "steel-chest.png", "c-3", "long-steel-chest-v-1x20")
+CreateChestItem("long-steel-chest-v-1x27", "steel-chest.png", "c-4", "long-steel-chest-v-1x27")
+CreateChestItem("long-steel-chest-v-1x34", "steel-chest.png", "c-5", "long-steel-chest-v-1x34")
+CreateChestItem("long-steel-chest-v-1x41", "steel-chest.png", "c-6", "long-steel-chest-v-1x41")
+CreateChestItem("long-steel-chest-v-1x48", "steel-chest.png", "c-7", "long-steel-chest-v-1x48")
+CreateChestItem("long-steel-chest-v-1x55", "steel-chest.png", "c-8", "long-steel-chest-v-1x55")
