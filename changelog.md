@@ -1,8 +1,10 @@
 # Modular-Chests
 
 # Changelog
+* 1.1.11 -
+* Updated to Factorio version 1.1
 * 0.18.10 - 
-* Modular chests placed by construction robots not correctly merge 
+* Modular chests placed by construction robots now correctly merge 
 * 0.18.9 -
 * Updated to Factorio version 0.18
 * 0.17.8 -
