@@ -1,5 +1,12 @@
 script.on_event(defines.events.on_built_entity, function(event)
+    HandlePlacedEntity(event)
+end)
 
+script.on_event(defines.events.on_robot_built_entity, function(event)
+    HandlePlacedEntity(event)
+end)
+
+function HandlePlacedEntity(event)
     local ModularChest = {
         ["Tier1"] = {
             ["Size1"] = "modular-chest",
@@ -63,7 +70,8 @@ script.on_event(defines.events.on_built_entity, function(event)
     local NewChestX = event.created_entity.position.x
     local NewChestY = event.created_entity.position.y
 
-    local CurrentSurface = game.players[event.player_index].surface
+    --local CurrentSurface = game.players[event.player_index].surface
+    local CurrentSurface = event.created_entity.surface
     local CurrentUserForce = event.created_entity.last_user.force
 
     function DestroyChest(Direction, OffsetPos)
@@ -347,6 +355,5 @@ script.on_event(defines.events.on_built_entity, function(event)
     	--game.print("Did not find horizontal chest to place, testing vertical")
     	CheckTotalLengthAll("vertical")
     end
-end)
-
+end
     
