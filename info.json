@@ -1,11 +1,11 @@
 {
     "name": "LB-Modular-Chests",
-    "version": "0.17.8",
+    "version": "0.18.9",
     "title": "Modular Chests",
     "author": "Lord Binary",
     "contact": "Discord: Lord Binary#9809",
     "homepage": "",
-    "factorio_version": "0.17",
-    "dependencies": ["base >= 0.17"],
+    "factorio_version": "0.18",
+    "dependencies": ["base >= 0.18"],
     "description": "This mod adds a modular chest that merges into longer chests when placed next to eachother. Primarily intended for loading and unloading trains."
 }

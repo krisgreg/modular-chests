@@ -1,6 +1,8 @@
 # Modular-Chests
 
 # Changelog
+* 0.18.9 -
+* Updated to Factorio version 0.18
 * 0.17.8 -
 * Modular Chests now properly maintain the correct force of the player merging the chests (defaulted to "player" force prior to this)
 * (thanks to DraLUSAD for posting about this issue)
