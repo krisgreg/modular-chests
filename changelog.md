@@ -1,6 +1,9 @@
 # Modular-Chests
 
 # Changelog
+* 0.15.6 -
+* Modular chests now work properly with the mod Factorissimo2 and other mods like it. 
+* (thanks to sunnybreath for posting about this issue)
 * 0.16.5 -
 * Added support for Chest sizes: 34, 41, 48 and 55 (by Gaddhi)
 * 0.16.4 -
