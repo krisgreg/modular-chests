@@ -1,7 +1,11 @@
 # Modular-Chests
 
 # Changelog
-* 0.15.6 -
+* 0.17.7 -
+* Updated to work with Factorio version 0.17
+* Added a new tier of chest (Modular Steel Chest) - more info in Discussion tab
+* Code refactored to be more maintainable and allow for more easily adding new tiers of chests
+* 0.16.6 -
 * Modular chests now work properly with the mod Factorissimo2 and other mods like it. 
 * (thanks to sunnybreath for posting about this issue)
 * 0.16.5 -
