@@ -1,11 +1,78 @@
 script.on_event(defines.events.on_built_entity, function(event)
+    HandlePlacedEntity(event)
+end)
 
-	if event.created_entity.name ~= "modular-chest" then
-		return
-	end
+script.on_event(defines.events.on_robot_built_entity, function(event)
+    HandlePlacedEntity(event)
+end)
+
+function HandlePlacedEntity(event)
+    local ModularChest = {
+        ["Tier1"] = {
+            ["Size1"] = "modular-chest",
+            ["horizontal"] = {
+                ["Size6"] = "long-iron-chest",
+                ["Size13"] = "long-iron-chest-1x13",
+                ["Size20"] = "long-iron-chest-1x20",
+                ["Size27"] = "long-iron-chest-1x27",
+                ["Size34"] = "long-iron-chest-1x34",
+                ["Size41"] = "long-iron-chest-1x41",
+                ["Size48"] = "long-iron-chest-1x48",
+                ["Size55"] = "long-iron-chest-1x55",
+            },
+            ["vertical"] = {
+                ["Size6"] = "long-iron-chest-v",
+                ["Size13"] = "long-iron-chest-v-1x13",
+                ["Size20"] = "long-iron-chest-v-1x20",
+                ["Size27"] = "long-iron-chest-v-1x27",
+                ["Size34"] = "long-iron-chest-v-1x34",
+                ["Size41"] = "long-iron-chest-v-1x41",
+                ["Size48"] = "long-iron-chest-v-1x48",
+                ["Size55"] = "long-iron-chest-v-1x55",
+            },
+        },
+        ["Tier2"] = {
+            ["Size1"] = "modular-steel-chest",
+            ["horizontal"] = {
+                ["Size6"] = "long-steel-chest",
+                ["Size13"] = "long-steel-chest-1x13",
+                ["Size20"] = "long-steel-chest-1x20",
+                ["Size27"] = "long-steel-chest-1x27",
+                ["Size34"] = "long-steel-chest-1x34",
+                ["Size41"] = "long-steel-chest-1x41",
+                ["Size48"] = "long-steel-chest-1x48",
+                ["Size55"] = "long-steel-chest-1x55",
+            },
+            ["vertical"] = {
+                ["Size6"] = "long-steel-chest-v",
+                ["Size13"] = "long-steel-chest-v-1x13",
+                ["Size20"] = "long-steel-chest-v-1x20",
+                ["Size27"] = "long-steel-chest-v-1x27",
+                ["Size34"] = "long-steel-chest-v-1x34",
+                ["Size41"] = "long-steel-chest-v-1x41",
+                ["Size48"] = "long-steel-chest-v-1x48",
+                ["Size55"] = "long-steel-chest-v-1x55",
+            },
+        },
+    }
+
+    local CurrentChestTier
+
+    for k, v in pairs(ModularChest) do
+        if event.created_entity.name == ModularChest[k].Size1 then
+            CurrentChestTier = k
+        end
+    end
+    if CurrentChestTier == nil then
+        return
+    end
 
     local NewChestX = event.created_entity.position.x
     local NewChestY = event.created_entity.position.y
+
+    --local CurrentSurface = game.players[event.player_index].surface
+    local CurrentSurface = event.created_entity.surface
+    local CurrentUserForce = event.created_entity.last_user.force
 
     function DestroyChest(Direction, OffsetPos)
     	local SearchX = 0
@@ -17,159 +84,65 @@ script.on_event(defines.events.on_built_entity, function(event)
     		SearchY = -1
     	end
 
+        local FoundChestSize
+
         local ChestInventory
 
-    	if game.surfaces.nauvis.find_entity("modular-chest", { NewChestX + (OffsetPos * SearchX), NewChestY + (OffsetPos * SearchY)}) ~= nil then
-    		if game.surfaces.nauvis.find_entity("modular-chest", { NewChestX + (OffsetPos * SearchX), NewChestY + (OffsetPos * SearchY)}).can_be_destroyed() then
-                ChestInventory = game.surfaces.nauvis.find_entity("modular-chest", { NewChestX + (OffsetPos * SearchX), NewChestY + (OffsetPos * SearchY)}).get_inventory(defines.inventory.chest).get_contents()
-    			game.surfaces.nauvis.find_entity("modular-chest", { NewChestX + (OffsetPos * SearchX), NewChestY + (OffsetPos * SearchY)}).destroy()
+    	if CurrentSurface.find_entity(ModularChest[CurrentChestTier]["Size1"], { NewChestX + (OffsetPos * SearchX), NewChestY + (OffsetPos * SearchY)}) ~= nil then
+    		if CurrentSurface.find_entity(ModularChest[CurrentChestTier]["Size1"], { NewChestX + (OffsetPos * SearchX), NewChestY + (OffsetPos * SearchY)}).can_be_destroyed() then
+                ChestInventory = CurrentSurface.find_entity(ModularChest[CurrentChestTier]["Size1"], { NewChestX + (OffsetPos * SearchX), NewChestY + (OffsetPos * SearchY)}).get_inventory(defines.inventory.chest).get_contents()
+    			CurrentSurface.find_entity(ModularChest[CurrentChestTier]["Size1"], { NewChestX + (OffsetPos * SearchX), NewChestY + (OffsetPos * SearchY)}).destroy()
+                return ChestInventory
     		end
     	end
 
-    	if Direction == "horizontal" then
-    		if game.surfaces.nauvis.find_entity("long-iron-chest", { NewChestX + (OffsetPos * SearchX), NewChestY + (OffsetPos * SearchY)}) ~= nil then
-    			if game.surfaces.nauvis.find_entity("long-iron-chest", { NewChestX + (OffsetPos * SearchX), NewChestY + (OffsetPos * SearchY)}).can_be_destroyed() then
-                    ChestInventory = game.surfaces.nauvis.find_entity("long-iron-chest", { NewChestX + (OffsetPos * SearchX), NewChestY + (OffsetPos * SearchY)}).get_inventory(defines.inventory.chest).get_contents()
-    				game.surfaces.nauvis.find_entity("long-iron-chest", { NewChestX + (OffsetPos * SearchX), NewChestY + (OffsetPos * SearchY)}).destroy()
-    			end
-    		elseif game.surfaces.nauvis.find_entity("long-iron-chest-1x13", { NewChestX + (OffsetPos * SearchX), NewChestY + (OffsetPos * SearchY)}) ~= nil then
-    			if game.surfaces.nauvis.find_entity("long-iron-chest-1x13", { NewChestX + (OffsetPos * SearchX), NewChestY + (OffsetPos * SearchY)}).can_be_destroyed() then
-                    ChestInventory = game.surfaces.nauvis.find_entity("long-iron-chest-1x13", { NewChestX + (OffsetPos * SearchX), NewChestY + (OffsetPos * SearchY)}).get_inventory(defines.inventory.chest).get_contents()
-    				game.surfaces.nauvis.find_entity("long-iron-chest-1x13", { NewChestX + (OffsetPos * SearchX), NewChestY + (OffsetPos * SearchY)}).destroy()
-    			end
-    		elseif game.surfaces.nauvis.find_entity("long-iron-chest-1x20", { NewChestX + (OffsetPos * SearchX), NewChestY + (OffsetPos * SearchY)}) ~= nil then
-    			if game.surfaces.nauvis.find_entity("long-iron-chest-1x20", { NewChestX + (OffsetPos * SearchX), NewChestY + (OffsetPos * SearchY)}).can_be_destroyed() then
-                    ChestInventory = game.surfaces.nauvis.find_entity("long-iron-chest-1x20", { NewChestX + (OffsetPos * SearchX), NewChestY + (OffsetPos * SearchY)}).get_inventory(defines.inventory.chest).get_contents()
-    				game.surfaces.nauvis.find_entity("long-iron-chest-1x20", { NewChestX + (OffsetPos * SearchX), NewChestY + (OffsetPos * SearchY)}).destroy()
-    			end
-    		elseif game.surfaces.nauvis.find_entity("long-iron-chest-1x27", { NewChestX + (OffsetPos * SearchX), NewChestY + (OffsetPos * SearchY)}) ~= nil then
-    			if game.surfaces.nauvis.find_entity("long-iron-chest-1x27", { NewChestX + (OffsetPos * SearchX), NewChestY + (OffsetPos * SearchY)}).can_be_destroyed() then
-                    ChestInventory = game.surfaces.nauvis.find_entity("long-iron-chest-1x27", { NewChestX + (OffsetPos * SearchX), NewChestY + (OffsetPos * SearchY)}).get_inventory(defines.inventory.chest).get_contents()
-    				game.surfaces.nauvis.find_entity("long-iron-chest-1x27", { NewChestX + (OffsetPos * SearchX), NewChestY + (OffsetPos * SearchY)}).destroy()
-    			end
-    		elseif game.surfaces.nauvis.find_entity("long-iron-chest-1x34", { NewChestX + (OffsetPos * SearchX), NewChestY + (OffsetPos * SearchY)}) ~= nil then
-    			if game.surfaces.nauvis.find_entity("long-iron-chest-1x34", { NewChestX + (OffsetPos * SearchX), NewChestY + (OffsetPos * SearchY)}).can_be_destroyed() then
-                    ChestInventory = game.surfaces.nauvis.find_entity("long-iron-chest-1x34", { NewChestX + (OffsetPos * SearchX), NewChestY + (OffsetPos * SearchY)}).get_inventory(defines.inventory.chest).get_contents()
-    				game.surfaces.nauvis.find_entity("long-iron-chest-1x34", { NewChestX + (OffsetPos * SearchX), NewChestY + (OffsetPos * SearchY)}).destroy()
-    			end
-    		elseif game.surfaces.nauvis.find_entity("long-iron-chest-1x41", { NewChestX + (OffsetPos * SearchX), NewChestY + (OffsetPos * SearchY)}) ~= nil then
-    			if game.surfaces.nauvis.find_entity("long-iron-chest-1x41", { NewChestX + (OffsetPos * SearchX), NewChestY + (OffsetPos * SearchY)}).can_be_destroyed() then
-                    ChestInventory = game.surfaces.nauvis.find_entity("long-iron-chest-1x41", { NewChestX + (OffsetPos * SearchX), NewChestY + (OffsetPos * SearchY)}).get_inventory(defines.inventory.chest).get_contents()
-    				game.surfaces.nauvis.find_entity("long-iron-chest-1x41", { NewChestX + (OffsetPos * SearchX), NewChestY + (OffsetPos * SearchY)}).destroy()
-    			end
-    		elseif game.surfaces.nauvis.find_entity("long-iron-chest-1x48", { NewChestX + (OffsetPos * SearchX), NewChestY + (OffsetPos * SearchY)}) ~= nil then
-    			if game.surfaces.nauvis.find_entity("long-iron-chest-1x48", { NewChestX + (OffsetPos * SearchX), NewChestY + (OffsetPos * SearchY)}).can_be_destroyed() then
-                    ChestInventory = game.surfaces.nauvis.find_entity("long-iron-chest-1x48", { NewChestX + (OffsetPos * SearchX), NewChestY + (OffsetPos * SearchY)}).get_inventory(defines.inventory.chest).get_contents()
-    				game.surfaces.nauvis.find_entity("long-iron-chest-1x48", { NewChestX + (OffsetPos * SearchX), NewChestY + (OffsetPos * SearchY)}).destroy()
-    			end
-    		elseif game.surfaces.nauvis.find_entity("long-iron-chest-1x55", { NewChestX + (OffsetPos * SearchX), NewChestY + (OffsetPos * SearchY)}) ~= nil then
-    			if game.surfaces.nauvis.find_entity("long-iron-chest-1x55", { NewChestX + (OffsetPos * SearchX), NewChestY + (OffsetPos * SearchY)}).can_be_destroyed() then
-                    ChestInventory = game.surfaces.nauvis.find_entity("long-iron-chest-1x55", { NewChestX + (OffsetPos * SearchX), NewChestY + (OffsetPos * SearchY)}).get_inventory(defines.inventory.chest).get_contents()
-    				game.surfaces.nauvis.find_entity("long-iron-chest-1x55", { NewChestX + (OffsetPos * SearchX), NewChestY + (OffsetPos * SearchY)}).destroy()
-    			end
-    		end
-    	elseif Direction == "vertical" then
-    		if game.surfaces.nauvis.find_entity("long-iron-chest-v", { NewChestX + (OffsetPos * SearchX), NewChestY + (OffsetPos * SearchY)}) ~= nil then
-    			if game.surfaces.nauvis.find_entity("long-iron-chest-v", { NewChestX + (OffsetPos * SearchX), NewChestY + (OffsetPos * SearchY)}).can_be_destroyed() then
-                    ChestInventory = game.surfaces.nauvis.find_entity("long-iron-chest-v", { NewChestX + (OffsetPos * SearchX), NewChestY + (OffsetPos * SearchY)}).get_inventory(defines.inventory.chest).get_contents()
-    				game.surfaces.nauvis.find_entity("long-iron-chest-v", { NewChestX + (OffsetPos * SearchX), NewChestY + (OffsetPos * SearchY)}).destroy()
-    			end
-    		elseif game.surfaces.nauvis.find_entity("long-iron-chest-v-1x13", { NewChestX + (OffsetPos * SearchX), NewChestY + (OffsetPos * SearchY)}) ~= nil then
-    			if game.surfaces.nauvis.find_entity("long-iron-chest-v-1x13", { NewChestX + (OffsetPos * SearchX), NewChestY + (OffsetPos * SearchY)}).can_be_destroyed() then
-                    ChestInventory = game.surfaces.nauvis.find_entity("long-iron-chest-v-1x13", { NewChestX + (OffsetPos * SearchX), NewChestY + (OffsetPos * SearchY)}).get_inventory(defines.inventory.chest).get_contents()
-    				game.surfaces.nauvis.find_entity("long-iron-chest-v-1x13", { NewChestX + (OffsetPos * SearchX), NewChestY + (OffsetPos * SearchY)}).destroy()
-    			end
-    		elseif game.surfaces.nauvis.find_entity("long-iron-chest-v-1x20", { NewChestX + (OffsetPos * SearchX), NewChestY + (OffsetPos * SearchY)}) ~= nil then
-    			if game.surfaces.nauvis.find_entity("long-iron-chest-v-1x20", { NewChestX + (OffsetPos * SearchX), NewChestY + (OffsetPos * SearchY)}).can_be_destroyed() then
-                    ChestInventory = game.surfaces.nauvis.find_entity("long-iron-chest-v-1x20", { NewChestX + (OffsetPos * SearchX), NewChestY + (OffsetPos * SearchY)}).get_inventory(defines.inventory.chest).get_contents()
-    				game.surfaces.nauvis.find_entity("long-iron-chest-v-1x20", { NewChestX + (OffsetPos * SearchX), NewChestY + (OffsetPos * SearchY)}).destroy()
-    			end
-    		elseif game.surfaces.nauvis.find_entity("long-iron-chest-v-1x27", { NewChestX + (OffsetPos * SearchX), NewChestY + (OffsetPos * SearchY)}) ~= nil then
-    			if game.surfaces.nauvis.find_entity("long-iron-chest-v-1x27", { NewChestX + (OffsetPos * SearchX), NewChestY + (OffsetPos * SearchY)}).can_be_destroyed() then
-                    ChestInventory = game.surfaces.nauvis.find_entity("long-iron-chest-v-1x27", { NewChestX + (OffsetPos * SearchX), NewChestY + (OffsetPos * SearchY)}).get_inventory(defines.inventory.chest).get_contents()
-    				game.surfaces.nauvis.find_entity("long-iron-chest-v-1x27", { NewChestX + (OffsetPos * SearchX), NewChestY + (OffsetPos * SearchY)}).destroy()
-    			end
-    		elseif game.surfaces.nauvis.find_entity("long-iron-chest-v-1x34", { NewChestX + (OffsetPos * SearchX), NewChestY + (OffsetPos * SearchY)}) ~= nil then
-    			if game.surfaces.nauvis.find_entity("long-iron-chest-v-1x34", { NewChestX + (OffsetPos * SearchX), NewChestY + (OffsetPos * SearchY)}).can_be_destroyed() then
-                    ChestInventory = game.surfaces.nauvis.find_entity("long-iron-chest-v-1x34", { NewChestX + (OffsetPos * SearchX), NewChestY + (OffsetPos * SearchY)}).get_inventory(defines.inventory.chest).get_contents()
-    				game.surfaces.nauvis.find_entity("long-iron-chest-v-1x34", { NewChestX + (OffsetPos * SearchX), NewChestY + (OffsetPos * SearchY)}).destroy()
-    			end
-    		elseif game.surfaces.nauvis.find_entity("long-iron-chest-v-1x41", { NewChestX + (OffsetPos * SearchX), NewChestY + (OffsetPos * SearchY)}) ~= nil then
-    			if game.surfaces.nauvis.find_entity("long-iron-chest-v-1x41", { NewChestX + (OffsetPos * SearchX), NewChestY + (OffsetPos * SearchY)}).can_be_destroyed() then
-                    ChestInventory = game.surfaces.nauvis.find_entity("long-iron-chest-v-1x41", { NewChestX + (OffsetPos * SearchX), NewChestY + (OffsetPos * SearchY)}).get_inventory(defines.inventory.chest).get_contents()
-    				game.surfaces.nauvis.find_entity("long-iron-chest-v-1x41", { NewChestX + (OffsetPos * SearchX), NewChestY + (OffsetPos * SearchY)}).destroy()
-    			end
-    		elseif game.surfaces.nauvis.find_entity("long-iron-chest-v-1x48", { NewChestX + (OffsetPos * SearchX), NewChestY + (OffsetPos * SearchY)}) ~= nil then
-    			if game.surfaces.nauvis.find_entity("long-iron-chest-v-1x48", { NewChestX + (OffsetPos * SearchX), NewChestY + (OffsetPos * SearchY)}).can_be_destroyed() then
-                    ChestInventory = game.surfaces.nauvis.find_entity("long-iron-chest-v-1x48", { NewChestX + (OffsetPos * SearchX), NewChestY + (OffsetPos * SearchY)}).get_inventory(defines.inventory.chest).get_contents()
-    				game.surfaces.nauvis.find_entity("long-iron-chest-v-1x48", { NewChestX + (OffsetPos * SearchX), NewChestY + (OffsetPos * SearchY)}).destroy()
-    			end
-    		elseif game.surfaces.nauvis.find_entity("long-iron-chest-v-1x55", { NewChestX + (OffsetPos * SearchX), NewChestY + (OffsetPos * SearchY)}) ~= nil then
-    			if game.surfaces.nauvis.find_entity("long-iron-chest-v-1x55", { NewChestX + (OffsetPos * SearchX), NewChestY + (OffsetPos * SearchY)}).can_be_destroyed() then
-                    ChestInventory = game.surfaces.nauvis.find_entity("long-iron-chest-v-1x55", { NewChestX + (OffsetPos * SearchX), NewChestY + (OffsetPos * SearchY)}).get_inventory(defines.inventory.chest).get_contents()
-    				game.surfaces.nauvis.find_entity("long-iron-chest-v-1x55", { NewChestX + (OffsetPos * SearchX), NewChestY + (OffsetPos * SearchY)}).destroy()
-    			end
-    		end
-    	end
+        if CurrentSurface.find_entity(ModularChest[CurrentChestTier][Direction]["Size6"], { NewChestX + (OffsetPos * SearchX), NewChestY + (OffsetPos * SearchY)}) ~= nil then
+            FoundChestSize = "Size6"
+        elseif CurrentSurface.find_entity(ModularChest[CurrentChestTier][Direction]["Size13"], { NewChestX + (OffsetPos * SearchX), NewChestY + (OffsetPos * SearchY)}) ~= nil then
+            FoundChestSize = "Size13"
+        elseif CurrentSurface.find_entity(ModularChest[CurrentChestTier][Direction]["Size20"], { NewChestX + (OffsetPos * SearchX), NewChestY + (OffsetPos * SearchY)}) ~= nil then
+            FoundChestSize = "Size20"
+        elseif CurrentSurface.find_entity(ModularChest[CurrentChestTier][Direction]["Size27"], { NewChestX + (OffsetPos * SearchX), NewChestY + (OffsetPos * SearchY)}) ~= nil then
+            FoundChestSize = "Size27"
+        elseif CurrentSurface.find_entity(ModularChest[CurrentChestTier][Direction]["Size34"], { NewChestX + (OffsetPos * SearchX), NewChestY + (OffsetPos * SearchY)}) ~= nil then
+            FoundChestSize = "Size34"
+        elseif CurrentSurface.find_entity(ModularChest[CurrentChestTier][Direction]["Size41"], { NewChestX + (OffsetPos * SearchX), NewChestY + (OffsetPos * SearchY)}) ~= nil then
+            FoundChestSize = "Size41"
+        elseif CurrentSurface.find_entity(ModularChest[CurrentChestTier][Direction]["Size48"], { NewChestX + (OffsetPos * SearchX), NewChestY + (OffsetPos * SearchY)}) ~= nil then
+            FoundChestSize = "Size48"
+        elseif CurrentSurface.find_entity(ModularChest[CurrentChestTier][Direction]["Size55"], { NewChestX + (OffsetPos * SearchX), NewChestY + (OffsetPos * SearchY)}) ~= nil then
+            FoundChestSize = "Size55"
+        else
+            return ChestInventory
+        end
+
+        if CurrentSurface.find_entity(ModularChest[CurrentChestTier][Direction][FoundChestSize], { NewChestX + (OffsetPos * SearchX), NewChestY + (OffsetPos * SearchY)}).can_be_destroyed() then
+            ChestInventory = CurrentSurface.find_entity(ModularChest[CurrentChestTier][Direction][FoundChestSize], { NewChestX + (OffsetPos * SearchX), NewChestY + (OffsetPos * SearchY)}).get_inventory(defines.inventory.chest).get_contents()
+            CurrentSurface.find_entity(ModularChest[CurrentChestTier][Direction][FoundChestSize], { NewChestX + (OffsetPos * SearchX), NewChestY + (OffsetPos * SearchY)}).destroy()
+        end
 
         return ChestInventory
     end
 
     function SpawnChest(Direction, LowPos, ChestSize, ChestInventories)
-    	local ChestName
         local NewEntity
-    	if Direction == "horizontal" then
-    		if ChestSize == 6 then
-    			ChestName = "long-iron-chest"
-    		elseif ChestSize == 13 then
-    			ChestName = "long-iron-chest-1x13"
-    		elseif ChestSize == 20 then
-    			ChestName = "long-iron-chest-1x20"
-    		elseif ChestSize == 27 then
-    			ChestName = "long-iron-chest-1x27"
-    		elseif ChestSize == 34 then
-    			ChestName = "long-iron-chest-1x34"
-    		elseif ChestSize == 41 then
-    			ChestName = "long-iron-chest-1x41"
-    		elseif ChestSize == 48 then
-    			ChestName = "long-iron-chest-1x48"
-    		elseif ChestSize == 55 then
-    			ChestName = "long-iron-chest-1x55"
-    		end
+        local SizeName = "Size" .. ChestSize
+    	local ChestName = ModularChest[CurrentChestTier][Direction][SizeName]
 
-    		NewEntity = game.surfaces.nauvis.create_entity(
+    	if Direction == "horizontal" then
+    		NewEntity = CurrentSurface.create_entity(
 			{
     	    	name=ChestName,
-    	    	force="player",
+    	    	force=CurrentUserForce,
     	    	position={NewChestX - LowPos - (0.5 * ChestSize - 0.5), NewChestY}
     		})
-
     	elseif Direction == "vertical" then
-    		if ChestSize == 6 then
-    			ChestName = "long-iron-chest-v"
-    		elseif ChestSize == 13 then
-    			ChestName = "long-iron-chest-v-1x13"
-    		elseif ChestSize == 20 then
-    			ChestName = "long-iron-chest-v-1x20"
-    		elseif ChestSize == 27 then
-    			ChestName = "long-iron-chest-v-1x27"
-    		elseif ChestSize == 34 then
-    			ChestName = "long-iron-chest-v-1x34"
-    		elseif ChestSize == 41 then
-    			ChestName = "long-iron-chest-v-1x41"
-    		elseif ChestSize == 48 then
-    			ChestName = "long-iron-chest-v-1x48"
-    		elseif ChestSize == 55 then
-    			ChestName = "long-iron-chest-v-1x55"
-    		end
-
-    		NewEntity = game.surfaces.nauvis.create_entity(
+    		NewEntity = CurrentSurface.create_entity(
 			{
     	    	name=ChestName,
-    	    	force="player",
+    	    	force=CurrentUserForce,
     	    	position={NewChestX, NewChestY - LowPos - (0.5 * ChestSize - 0.5)}
     		})
-
     	end
 
         for k, v in pairs(ChestInventories) do
@@ -229,43 +202,25 @@ script.on_event(defines.events.on_built_entity, function(event)
 
     	--create array with data about chests in the world around the newly placed chest
 		for i = -54, 54 do
-			if Direction == "horizontal" then
-				if game.surfaces.nauvis.find_entity("modular-chest", { NewChestX - (i * SearchX), NewChestY - (i * SearchY)}) ~= nil then
-					SearchArray[i] = 1
-				elseif game.surfaces.nauvis.find_entity("long-iron-chest", { NewChestX - (i * SearchX), NewChestY - (i * SearchY)}) ~= nil then
-					SearchArray[i] = 6
-				elseif game.surfaces.nauvis.find_entity("long-iron-chest-1x13", { NewChestX - (i * SearchX), NewChestY - (i * SearchY)}) ~= nil then
-					SearchArray[i] = 13
-				elseif game.surfaces.nauvis.find_entity("long-iron-chest-1x20", { NewChestX - (i * SearchX), NewChestY - (i * SearchY)}) ~= nil then
-					SearchArray[i] = 20
-				elseif game.surfaces.nauvis.find_entity("long-iron-chest-1x27", { NewChestX - (i * SearchX), NewChestY - (i * SearchY)}) ~= nil then
-					SearchArray[i] = 27
-				elseif game.surfaces.nauvis.find_entity("long-iron-chest-1x34", { NewChestX - (i * SearchX), NewChestY - (i * SearchY)}) ~= nil then
-					SearchArray[i] = 34
-				elseif game.surfaces.nauvis.find_entity("long-iron-chest-1x41", { NewChestX - (i * SearchX), NewChestY - (i * SearchY)}) ~= nil then
-					SearchArray[i] = 41
-				elseif game.surfaces.nauvis.find_entity("long-iron-chest-1x48", { NewChestX - (i * SearchX), NewChestY - (i * SearchY)}) ~= nil then
-					SearchArray[i] = 48
-				end
-			elseif Direction == "vertical" then
-				if game.surfaces.nauvis.find_entity("modular-chest", { NewChestX - (i * SearchX), NewChestY - (i * SearchY)}) ~= nil then
-					SearchArray[i] = 1
-				elseif game.surfaces.nauvis.find_entity("long-iron-chest-v", { NewChestX - (i * SearchX), NewChestY - (i * SearchY)}) ~= nil then
-					SearchArray[i] = 6
-				elseif game.surfaces.nauvis.find_entity("long-iron-chest-v-1x13", { NewChestX - (i * SearchX), NewChestY - (i * SearchY)}) ~= nil then
-					SearchArray[i] = 13
-				elseif game.surfaces.nauvis.find_entity("long-iron-chest-v-1x20", { NewChestX - (i * SearchX), NewChestY - (i * SearchY)}) ~= nil then
-					SearchArray[i] = 20
-				elseif game.surfaces.nauvis.find_entity("long-iron-chest-v-1x27", { NewChestX - (i * SearchX), NewChestY - (i * SearchY)}) ~= nil then
-					SearchArray[i] = 27
-				elseif game.surfaces.nauvis.find_entity("long-iron-chest-v-1x34", { NewChestX - (i * SearchX), NewChestY - (i * SearchY)}) ~= nil then
-					SearchArray[i] = 34
-				elseif game.surfaces.nauvis.find_entity("long-iron-chest-v-1x41", { NewChestX - (i * SearchX), NewChestY - (i * SearchY)}) ~= nil then
-					SearchArray[i] = 41
-				elseif game.surfaces.nauvis.find_entity("long-iron-chest-v-1x48", { NewChestX - (i * SearchX), NewChestY - (i * SearchY)}) ~= nil then
-					SearchArray[i] = 48
-				end
-			end
+            if CurrentSurface.find_entity(ModularChest[CurrentChestTier]["Size1"], { NewChestX - (i * SearchX), NewChestY - (i * SearchY)}) ~= nil then
+                SearchArray[i] = 1
+            else
+                if CurrentSurface.find_entity(ModularChest[CurrentChestTier][Direction]["Size6"], { NewChestX - (i * SearchX), NewChestY - (i * SearchY)}) ~= nil then
+                    SearchArray[i] = 6
+                elseif CurrentSurface.find_entity(ModularChest[CurrentChestTier][Direction]["Size13"], { NewChestX - (i * SearchX), NewChestY - (i * SearchY)}) ~= nil then
+                    SearchArray[i] = 13
+                elseif CurrentSurface.find_entity(ModularChest[CurrentChestTier][Direction]["Size20"], { NewChestX - (i * SearchX), NewChestY - (i * SearchY)}) ~= nil then
+                    SearchArray[i] = 20
+                elseif CurrentSurface.find_entity(ModularChest[CurrentChestTier][Direction]["Size27"], { NewChestX - (i * SearchX), NewChestY - (i * SearchY)}) ~= nil then
+                    SearchArray[i] = 27
+                elseif CurrentSurface.find_entity(ModularChest[CurrentChestTier][Direction]["Size34"], { NewChestX - (i * SearchX), NewChestY - (i * SearchY)}) ~= nil then
+                    SearchArray[i] = 34
+                elseif CurrentSurface.find_entity(ModularChest[CurrentChestTier][Direction]["Size41"], { NewChestX - (i * SearchX), NewChestY - (i * SearchY)}) ~= nil then
+                    SearchArray[i] = 41
+                elseif CurrentSurface.find_entity(ModularChest[CurrentChestTier][Direction]["Size48"], { NewChestX - (i * SearchX), NewChestY - (i * SearchY)}) ~= nil then
+                    SearchArray[i] = 48
+                end
+            end
 		end
 
 
@@ -400,6 +355,5 @@ script.on_event(defines.events.on_built_entity, function(event)
     	--game.print("Did not find horizontal chest to place, testing vertical")
     	CheckTotalLengthAll("vertical")
     end
-end)
-
+end
     
