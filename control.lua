@@ -356,4 +356,3 @@ function HandlePlacedEntity(event)
     	CheckTotalLengthAll("vertical")
     end
 end
-    

@@ -1,6 +1,8 @@
 # Modular-Chests
 
 # Changelog
+* 1.1.12 - 
+* Added toggle to enable modular chest recipes (helps with robot placement from blueprints) [default=off]
 * 1.1.11 -
 * Updated to Factorio version 1.1
 * 0.18.10 - 
